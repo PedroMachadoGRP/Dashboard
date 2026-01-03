@@ -1,5 +1,41 @@
+"use client"
 
-export default function page() {
+import axios from "axios"
+import { useRouter } from "next/navigation"
+import { useSnackbar } from "notistack"
+import { useState } from "react"
+
+export default function Page() {
+
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const router = useRouter()
+  const { enqueueSnackbar } = useSnackbar()
+
+
+  const loginUser = async () => {
+
+    try {
+      const response = await axios.post('http://localhost:3333/auth/login', { email, password })
+
+      const {token, user} = response.data
+      
+      localStorage.setItem("token",token)
+
+      router.push('/')
+
+    } catch (e) {
+      enqueueSnackbar("Erro ao cadastrar usuário", {
+        variant: "error",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      })
+      console.log("Error: " + e);
+    }
+  }
+
   return (
     <div className="flex h-screen w-full ">
 
@@ -14,10 +50,10 @@ export default function page() {
           </div>
 
 
-          <input type="text" placeholder="Email" className="shadow-xl/20 shadow-violet-900 border border-indigo-700 outline-none rounded-[6] p-1 bg-gray-700 text-neutral-100 transition delay-50 duration-300 ease-in focus:border-2 focus:border-indigo-400 focus:scale-101" />
-          <input type="password" placeholder="Senha" className="shadow-xl/20 shadow-violet-900 border border-indigo-700 outline-none rounded-[6] p-1 bg-gray-700 text-neutral-100 transition delay-50 duration-300 ease-in focus:border-2 focus:border-indigo-400 focus:scale-101" />
+          <input type="text" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} className="shadow-xl/20 shadow-violet-900 border border-indigo-700 outline-none rounded-[6] p-1 bg-gray-700 text-neutral-100 transition delay-50 duration-300 ease-in focus:border-2 focus:border-indigo-400 focus:scale-101" />
+          <input type="password" value={password} placeholder="Senha" onChange={(e) => setPassword(e.target.value)} className="shadow-xl/20 shadow-violet-900 border border-indigo-700 outline-none rounded-[6] p-1 bg-gray-700 text-neutral-100 transition delay-50 duration-300 ease-in focus:border-2 focus:border-indigo-400 focus:scale-101" />
 
-          <button className="m-1 bg-violet-800 w-95 p-1 rounded-[6] self-center text-neutral-200 transition delay-50 duration-300 ease-in-out hover:bg-blue-950 cursor-pointer">
+          <button onClick={loginUser} className="m-1 bg-violet-800 w-95 p-1 rounded-[6] self-center text-neutral-200 transition delay-50 duration-300 ease-in-out hover:bg-blue-950 cursor-pointer">
             Entrar
           </button>
 
