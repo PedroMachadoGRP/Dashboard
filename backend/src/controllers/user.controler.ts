@@ -15,8 +15,13 @@ export class UserController {
     }
 
     async list(req: Request, res: Response) {
-        const users = await service.findAll()
-        res.json(users)
+        try {
+            const users = await service.findAll()
+            res.json(users)
+        } catch (e: any) {
+            res.status(400).json({ message: e.message })
+        }
+
     }
 
     async getById(req: Request, res: Response) {

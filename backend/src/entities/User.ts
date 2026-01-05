@@ -1,5 +1,6 @@
-import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import bycrypt from 'bcrypt'
+import { Group } from "./Group";
 
 @Entity('user')
 export class User {
@@ -15,6 +16,11 @@ export class User {
 
     @Column()
     password:string
+
+    @OneToMany(() => Group, (group) => group.user,{
+        onDelete:"CASCADE"
+    })
+    group:Group[];
 
     @CreateDateColumn()
     createdAt:Date

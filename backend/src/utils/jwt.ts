@@ -3,7 +3,7 @@ import jwt, { SignOptions } from 'jsonwebtoken';
 interface Payload {
     id: number;
     email: string;
-    // outros campos se precisar
+
 }
 
 export const generateToken = (payload: Payload): string => {
