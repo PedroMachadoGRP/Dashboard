@@ -1,5 +1,7 @@
 "use client"
 
+import { useAuth } from "@/app/context/useAuth"
+import { loginUser } from "@/services/auth.service"
 import axios from "axios"
 import { useRouter } from "next/navigation"
 import { useSnackbar } from "notistack"
@@ -11,28 +13,35 @@ export default function Page() {
   const [password, setPassword] = useState("")
   const router = useRouter()
   const { enqueueSnackbar } = useSnackbar()
+  const { login } = useAuth()
 
 
-  const loginUser = async () => {
+  const handleLogin = async () => {
 
     try {
-      const response = await axios.post('http://localhost:3333/auth/login', { email, password })
+      const data = await loginUser({
+        email,
+        password
+      })
 
-      const {token, user} = response.data
-      
-      localStorage.setItem("token",token)
+      localStorage.setItem("token", data.token)
 
-      router.push('/')
+      login(String(data.user.id))
+      router.push('/home')
 
-    } catch (e) {
-      enqueueSnackbar("Erro ao cadastrar usuário", {
+    } catch (error: any) {
+      const message =
+        error?.response?.data?.message
+
+      enqueueSnackbar(message, {
         variant: "error",
         anchorOrigin: {
           vertical: "top",
           horizontal: "right",
         },
-      })
-      console.log("Error: " + e);
+      });
+
+      console.error(error);
     }
   }
 
@@ -53,7 +62,7 @@ export default function Page() {
           <input type="text" value={email} placeholder="Email" onChange={(e) => setEmail(e.target.value)} className="shadow-xl/20 shadow-violet-900 border border-indigo-700 outline-none rounded-[6] p-1 bg-gray-700 text-neutral-100 transition delay-50 duration-300 ease-in focus:border-2 focus:border-indigo-400 focus:scale-101" />
           <input type="password" value={password} placeholder="Senha" onChange={(e) => setPassword(e.target.value)} className="shadow-xl/20 shadow-violet-900 border border-indigo-700 outline-none rounded-[6] p-1 bg-gray-700 text-neutral-100 transition delay-50 duration-300 ease-in focus:border-2 focus:border-indigo-400 focus:scale-101" />
 
-          <button onClick={loginUser} className="m-1 bg-violet-800 w-95 p-1 rounded-[6] self-center text-neutral-200 transition delay-50 duration-300 ease-in-out hover:bg-blue-950 cursor-pointer">
+          <button onClick={handleLogin} className="m-1 bg-violet-800 w-95 p-1 rounded-[6] self-center text-neutral-200 transition delay-50 duration-300 ease-in-out hover:bg-blue-950 cursor-pointer">
             Entrar
           </button>
 

@@ -1,6 +1,6 @@
 import { usePathname } from 'next/navigation';
 
-import { Bell, BookMarked, Home, Settings, User } from 'lucide-react';
+import {BookMarked, Home, Layers, Settings, User } from 'lucide-react';
 
 export const NavItems = () => {
   const pathname = usePathname();
@@ -12,9 +12,9 @@ export const NavItems = () => {
   return [
     {
       name: 'Home',
-      href: '/',
+      href: '/home',
       icon: <Home size={20} />,
-      active: pathname === '/',
+      active: pathname === '/home',
       position: 'top',
     },
     {
@@ -25,10 +25,10 @@ export const NavItems = () => {
       position: 'top',
     },
     {
-      name: 'Notifications',
-      href: '/notifications',
-      icon: <Bell size={20} />,
-      active: isNavItemActive(pathname, '/notifications'),
+      name: 'Group',
+      href: '/groups',
+      icon: <Layers size={20} />,
+      active: isNavItemActive(pathname, '/groups'),
       position: 'top',
     },
     {
@@ -38,6 +38,7 @@ export const NavItems = () => {
       active: isNavItemActive(pathname, '/activties'),
       position: 'top',
     },
+    
     {
       name: 'Settings',
       href: '/settings',
@@ -45,5 +46,6 @@ export const NavItems = () => {
       active: isNavItemActive(pathname, '/settings'),
       position: 'bottom',
     },
+
   ];
 };

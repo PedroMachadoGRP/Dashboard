@@ -83,7 +83,7 @@ export default function SideBar() {
             bg-white dark:bg-neutral-800
             text-neutral-700 dark:text-neutral-200
             border-neutral-300 dark:border-neutral-700
-            hover:shadow-lg
+            hover:shadow-lg 
           "
         >
           {isExpanded ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
@@ -105,7 +105,7 @@ export const SideNavItem: React.FC<{
   isExpanded: boolean
 }> = ({ label, icon, path, active, isExpanded }) => {
   const base =
-    "relative flex items-center rounded-md transition-colors text-sm"
+    "relative flex items-center rounded-md transition-colors text-lm"
 
   const activeStyle =
     "bg-neutral-200 text-neutral-800 dark:bg-neutral-800 dark:text-white"
