@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { UserService } from "../services/user.services";
 import { generateToken } from "../utils/jwt";
+import { AppError } from "../errors/AppError";
 
 const service = new UserService()
 
@@ -9,8 +10,18 @@ export class AuthController {
         try {
             const user = await service.create(req.body)
             res.status(201).json(user)
-        } catch (e: any) {
-            res.status(400).json({ message: e.message })
+        } catch (error: any) {
+
+            // console.log("Tipo:", error.constructor.name);
+            // console.log("É AppError?", error instanceof AppError);
+            // console.log(error);
+
+
+            if (error instanceof AppError) {
+                return res.status(error.statusCode).json({ message: error.message });
+            }
+            console.error(error);
+            return res.status(500).json({ message: "Internal server Error" });
         }
     }
 
@@ -31,8 +42,8 @@ export class AuthController {
             const token = generateToken({ id: user.id, email: user.email })
 
             res.json({ user: safe, token })
-        } catch (e: any) {
-            res.status(400).json({ message: e.message })
+        } catch (error: any) {
+            res.status(400).json({ message: error.message })
         }
     }
 }

@@ -1,5 +1,6 @@
 import { AppDataSource } from "../data-source";
 import { User } from "../entities/User";
+import { AppError } from "../errors/AppError";
 
 
 export class UserService {
@@ -12,19 +13,20 @@ export class UserService {
                 where: { email: data.email },
             })
 
-            if (emailExist) throw new Error("Email alredy registered")
+            if (emailExist) throw new AppError("Email já registrado",409)
 
             const user = await this.userRepo.create(data)
             return await this.userRepo.save(user)
 
-        } catch (e) {
-            console.log("Error: " + e);
+        } catch (e: any) {
+            console.log("Error:" + e);
+            throw e
         }
     }
 
     async findAll() {
         try {
-            const users = this.userRepo.find({relations:["group"]})
+            const users = this.userRepo.find({ relations: ["group"] })
 
             return (await users).map((u) => {
                 const clone: any = { ...u };
@@ -33,15 +35,16 @@ export class UserService {
 
                 return clone
             })
-        } catch (e) {
-            console.log("Error: " + e);
+        } catch (e: any) {
+            console.log("Error:" + e);
+            throw e
         }
 
     }
 
     async findById(id: number) {
         try {
-            const user = await this.userRepo.findOne({ where: { id },relations:["group"] })
+            const user = await this.userRepo.findOne({ where: { id }, relations: ["group"] })
 
             if (!user) throw new Error("User not found")
 
@@ -51,8 +54,9 @@ export class UserService {
 
             return clone
 
-        } catch (e) {
-            console.log("Error: " + e);
+        } catch (e: any) {
+            console.log("Error:" + e);
+            throw e
         }
     }
 
@@ -71,8 +75,9 @@ export class UserService {
             Object.assign(user, rest)
 
             return await this.userRepo.save(user)
-        } catch (e) {
-            console.log("Error: " + e);
+        } catch (e: any) {
+            console.log("Error:" + e);
+            throw e
         }
     }
 
@@ -85,19 +90,22 @@ export class UserService {
             await this.userRepo.remove(user)
 
             return { message: "User deleted" }
-        } catch (e) {
-            console.log("Error: " + e);
+        } catch (e: any) {
+            console.log("Error:" + e);
+            throw e
+
         }
     }
-     async findEmail(email: string) {
-    try {
-      const user = await this.userRepo.findOne({ where: { email } });
+    async findEmail(email: string) {
+        try {
+            const user = await this.userRepo.findOne({ where: { email } });
 
-      if (!user) throw new Error("User not found");
+            if (!user) throw new Error("User not found");
 
-      return user;
-    } catch (e) {
-      console.log("Erroe:" + e);
+            return user;
+        } catch (e: any) {
+            console.log("Error:" + e);
+            throw e
+        }
     }
-  }
 }
