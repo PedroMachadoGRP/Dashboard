@@ -22,5 +22,8 @@ export const AuthService = {
     async register(data:RegisterPayload) {
         const response = await api.post('/auth/register',data)
         return response.data
+    },
+    async logout() {
+        
     }
 }

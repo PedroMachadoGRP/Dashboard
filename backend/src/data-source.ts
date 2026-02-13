@@ -16,5 +16,5 @@ export const AppDataSource = new DataSource({
     database:process.env.DB_NAME,
     entities:[User,Group],
     synchronize:true,
-    logging:false
+    logging:false,
 })
