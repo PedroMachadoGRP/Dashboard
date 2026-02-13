@@ -3,6 +3,7 @@
 
 import { useAuth } from "@/app/context/useAuth"
 import ActivityGroupModal from "@/components/profile/activityGroupModal"
+import { me } from "@/services/auth.service"
 import axios from "axios"
 import { use, useEffect, useEffectEvent, useState } from "react"
 
@@ -36,7 +37,7 @@ export default function Page() {
     const [group, setGroup] = useState<Group[]>([])
     const [title, setTitle] = useState<string>("")
     const [description, setDescription] = useState<string>("")
-    const { userId } = useAuth()
+    const { userId, } = useAuth()
     const [publi, setPubli] = useState<PublicarMaterialDTO>({
         title: title,
         description: description,
@@ -60,30 +61,26 @@ export default function Page() {
         setToken(localStorage.getItem("token"))
     })
 
-    useEffect(() => {
-        async function getUser() {
-            try {
-                const response = await axios.get(`http://localhost:3333/users/${userId}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
+ useEffect(() => {
 
-                )
-                setUser(response.data)
-                console.log(userId);
+    async function loadUser() {
 
+      try {
 
-            } catch (e) {
-                console.log("Error: " + e);
+        const data = await me()
 
-            }
-        }
+        setUser(data)
 
-        if (userId && token) {
-            getUser()
-        }
-    }, [userId, token])
+      } catch {
+
+        setUser(null)
+      }
+
+    }
+
+    loadUser()
+
+  }, [])
 
 
     useEffect(() => {

@@ -11,23 +11,24 @@ export default function Page() {
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const router = useRouter()
+
   const { enqueueSnackbar } = useSnackbar()
-  const { login } = useAuth()
+  const { login} = useAuth()
 
 
   const handleLogin = async () => {
 
     try {
-      const data = await loginUser({
-        email,
-        password
-      })
 
-      localStorage.setItem("token", data.token)
+      await login(email, password)
 
-      login(String(data.user.id))
-      router.push('/home')
+      enqueueSnackbar("Login realizado com sucesso", {
+        variant: "success",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
 
     } catch (error: any) {
       const message =
