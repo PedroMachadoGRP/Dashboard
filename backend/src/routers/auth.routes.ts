@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { AuthController } from "../controllers/auth.controler";
+import { AuthController } from "../controllers/auth.controller";
 import { validateSchema } from "../middlewares/createUserMiddleware";
 import { createUserSchema } from "../DTOS/CreateUserDTO";
 import { authMiddleware } from "../middlewares/authMiddleware";

@@ -2,7 +2,9 @@ import { config } from 'dotenv'
 import {DataSource} from 'typeorm'
 import {User} from './entities/User'
 import 'reflect-metadata'
-import { Group } from './entities/Group'
+import { Activity } from './entities/Activity'
+import { ActivityDay } from './entities/ActivityDay'
+
 
 
 config()
@@ -14,7 +16,7 @@ export const AppDataSource = new DataSource({
     username: process.env.DB_USERNAME,
     password:process.env.DB_PASSWORD,
     database:process.env.DB_NAME,
-    entities:[User,Group],
+    entities:[User,Activity,ActivityDay],
     synchronize:true,
     logging:false,
 })

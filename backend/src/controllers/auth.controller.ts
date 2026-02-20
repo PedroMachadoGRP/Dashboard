@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserService } from "../services/user.services";
+import { UserService } from "../services/user.service";
 import { generateToken } from "../utils/jwt";
 import { AppError } from "../errors/AppError";
 

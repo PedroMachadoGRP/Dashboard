@@ -1,4 +1,4 @@
-import { UserService } from "../services/user.services";
+import { UserService } from "../services/user.service";
 import { Request, Response } from "express";
 
 

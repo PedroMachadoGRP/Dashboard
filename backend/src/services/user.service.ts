@@ -26,7 +26,7 @@ export class UserService {
 
     async findAll() {
         try {
-            const users = this.userRepo.find({ relations: ["group"] })
+            const users = this.userRepo.find({ relations: ["activity"] })
 
             return (await users).map((u) => {
                 const clone: any = { ...u };
@@ -44,7 +44,7 @@ export class UserService {
 
     async findById(id: number) {
         try {
-            const user = await this.userRepo.findOne({ where: { id }, relations: ["group"] })
+            const user = await this.userRepo.findOne({ where: { id }, relations: ["activity"] })
 
             if (!user) throw new Error("User not found")
 
