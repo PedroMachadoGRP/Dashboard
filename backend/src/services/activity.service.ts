@@ -7,39 +7,35 @@ export class ActivityService {
     private userRepo = AppDataSource.getRepository(User)
     private activityRepo = AppDataSource.getRepository(Activity)
 
-    async create(dataActivity: any) {
-    try {
-        const { user, days, ...data } = dataActivity
+async create(dataActivity: Activity) {
+  try {
+    const { user, activityDay, ...data } = dataActivity
 
-        const userActivity = await this.userRepo.findOneBy({
-            id: user.id
-        })
+    const userActivity = await this.userRepo.findOneBy({
+      id: user.id
+    })
 
-        if (!userActivity) {
-            throw new Error("Usuário não encontrado")
-        }
+    if (!userActivity) throw new Error("Usuário não encontrado")
 
-        const activity = this.activityRepo.create({
-            ...data,
-            user: userActivity,
-            days: days.map((day: string) => ({
-                day
-            }))
-        })
+    const activity = this.activityRepo.create({
+      ...data,
+      user: userActivity,
+      activityDay: activityDay ?? [] 
+    })
 
-        return await this.activityRepo.save(activity)
+    return await this.activityRepo.save(activity)
 
-    } catch (e) {
-        console.error("Erro:", e)
-        throw e
-    }
+  } catch (e) {
+    console.error("Erro:", e)
+    throw e
+  }
 }
 
 
     async findAll() {
     try {
         const activitys = await this.activityRepo.find({
-            relations: ["user", "activity_day"]
+            relations: ["user", "activityDay"]
         })
 
         return activitys.map((u) => {

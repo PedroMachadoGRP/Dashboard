@@ -14,7 +14,7 @@ export class Activity {
     @OneToMany(() => ActivityDay, day => day.activity, {
         cascade: true,
     })
-    days: ActivityDay[]
+    activityDay: ActivityDay[]
 
     @ManyToOne(() => User, (user) => user.activity, {
         cascade: true,
@@ -22,7 +22,5 @@ export class Activity {
     })
     @JoinColumn({ name: "user_id" })
     user: User
-
-
 
 }

@@ -4,13 +4,13 @@ import { Activity } from "./Activity"
 
 
 export enum ActivityDayEnum {
-  MONDAY = "monday",
-  TUESDAY = "tuesday",
-  WEDNESDAY = "wednesday",
-  THURSDAY = "thursday",
-  FRIDAY = "friday",
-  SATURDAY = "saturday",
-  SUNDAY = "sunday",
+  SEGUNDA = "segunda",
+  TERCA = "terça",
+  QUARTA = "quarta",
+  QUINTA = "quinta",
+  SEXTA = "sexta",
+  SABADO = "sabado",
+  DOMINGO = "domingo",
 }
 
 @Entity("activity_day")
@@ -24,7 +24,7 @@ export class ActivityDay {
   })
   day: ActivityDayEnum
 
-  @ManyToOne(() => Activity, activity => activity.days, {
+  @ManyToOne(() => Activity, activity => activity.activityDay, {
     onDelete: "CASCADE",
   })
   activity: Activity
