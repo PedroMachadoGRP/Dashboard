@@ -35,7 +35,7 @@ async create(dataActivity: Activity) {
     async findAll() {
     try {
         const activitys = await this.activityRepo.find({
-            relations: ["user", "activityDay"]
+            relations: ["user", "activityDay"], order :{id: "DESC"}, take:3,
         })
 
         return activitys.map((u) => {
