@@ -41,7 +41,12 @@ export default function Page() {
         user: { id: Number(userId) },
         activityDay: [
           { day: "Segunda" },
-          { day: "Quarta" }
+          { day: "Terça" },
+          { day: "Quarta" },
+          { day: "Quinta" },
+          { day: "Sexta" },
+          { day: "Sabado" },
+          { day: "Domingo" }
         ]
       })
     } catch (error: any) {
@@ -82,11 +87,24 @@ export default function Page() {
   return (
 
     <div className="flex flex-1 flex-col bg-gray-100 dark:bg-black h-full w-full p-5 gap-10">
-      <header className="flex p-2 h-25 bg-white rounded-2xl drop-shadow-black drop-shadow-xl/10 dark:drop-shadow-white">
-        <h2 className=" text-start text-4xl  antialiased text-neutral-500">Hello, {user?.name}</h2>
+      <header className="flex p-2 h-25 bg-white rounded-2xl drop-shadow-black drop-shadow-xl/10 dark:drop-shadow-white dark:bg-blue-800">
+        <h2 className=" text-start text-4xl  antialiased text-neutral-500 dark:text-zinc-100 ">Hello, {user?.name}</h2>
       </header>
 
-      <section>
+      <section className="flex flex-col">
+        <h1 className="text-start text-3xl antialiased text-neutral-500 dark:text-zinc-100">Suas atividades</h1>
+        <div className="flex justify-between flex-row">
+          {activities?.map(activity => (
+            <UserActivityCard
+              key={activity.id}
+              title={activity.title}
+              days={activity.activityDay}
+            />
+          ))}
+        </div>
+      </section>
+
+      {/* <section>
         <button className="bg-amber-50" onClick={() => user && handleUpdate(user?.id)}>
           Atualizar
         </button>
@@ -98,18 +116,8 @@ export default function Page() {
           Criar Activity (TESTE)
         </button>
 
-      </section>
-      <section className="flex flex-col justify-center ">
-        <div className="flex flex-row">
-          {activities?.map(activity => (
-            <UserActivityCard
-              key={activity.id}
-              title={activity.title}
-              days={activity.activityDay}
-            />
-          ))}
-        </div>
-      </section>
+      </section> */}
+
 
 
     </div>
