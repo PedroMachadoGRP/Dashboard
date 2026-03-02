@@ -7,6 +7,7 @@ interface LoginData {
 
 interface RegisterData {
     name:string;
+    lastName:string
     email:string;
     password:string
 }
@@ -14,6 +15,7 @@ interface RegisterData {
 export interface User {
   id: string
   name: string
+  lastName:string
   email: string
 }
 

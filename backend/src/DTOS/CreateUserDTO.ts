@@ -2,6 +2,7 @@ import {z} from "zod"
 
 export const createUserSchema = z.object({
     name:z.string().min(1, "O nome é obrigatório").max(100,"Você ultrapassou o limite de caracteres do nome"),
+    lastName:z.string().min(1, "O sobrenome é obrigatório").max(100,"Você ultrapassou o limite de caracteres do sobrenome"),
     email:z.string().email("E-mail invalido"),
     password:z.string().min(8,"Senha deve ter no mínimo 6 caracteres")
     .refine((v) =>/[A-Z]/.test(v),{message:"A senha deve conter letra maiúscula",})

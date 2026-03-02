@@ -2,6 +2,7 @@ import { api } from "./api";
 
 interface RegisterPayload {
     name: string
+    lastName:string
     email: string
     password: string
 }

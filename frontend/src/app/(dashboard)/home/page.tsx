@@ -86,7 +86,7 @@ export default function Page() {
 
   return (
 
-    <div className="flex flex-1 flex-col bg-gray-100 dark:bg-black h-full w-full p-5 gap-10">
+    <div className="flex flex-1 flex-col  h-full w-full p-5 gap-10">
       <header className="flex p-2 h-25 bg-white rounded-2xl drop-shadow-black drop-shadow-xl/10 dark:drop-shadow-white dark:bg-blue-800">
         <h2 className=" text-start text-4xl  antialiased text-neutral-500 dark:text-zinc-100 ">Hello, {user?.name}</h2>
       </header>

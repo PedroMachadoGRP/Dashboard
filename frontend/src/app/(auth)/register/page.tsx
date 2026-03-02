@@ -8,6 +8,7 @@ import { registerSchema } from "@/schemas/register.schema"
 
 export default function Page() {
     const [name, setName] = useState("")
+    const [lastName,setLastName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
@@ -18,6 +19,7 @@ export default function Page() {
 
             const result = registerSchema.safeParse({
                 name,
+                lastName,
                 email,
                 password,
             });
@@ -84,6 +86,7 @@ export default function Page() {
                     </div>
 
                     <input type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} className="shadow-xl/20 shadow-violet-900 border border-indigo-700 outline-none rounded-[6] p-1 bg-gray-700  text-neutral-100 transition delay-50 duration-300 ease-in focus:border-2 focus:border-indigo-400 focus:scale-101   " />
+                    <input type="text" placeholder="Sobrenome" value={lastName} onChange={(e) => setLastName(e.target.value)} className="shadow-xl/20 shadow-violet-900 border border-indigo-700 outline-none rounded-[6] p-1 bg-gray-700  text-neutral-100 transition delay-50 duration-300 ease-in focus:border-2 focus:border-indigo-400 focus:scale-101   " />
                     <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="shadow-xl/20 shadow-violet-900 border border-indigo-700 outline-none rounded-[6] p-1 bg-gray-700 text-neutral-100 transition delay-50 duration-300 ease-in focus:border-2 focus:border-indigo-400 focus:scale-101" />
                     <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} className="shadow-xl/20 shadow-violet-900 border border-indigo-700 outline-none rounded-[6] p-1 bg-gray-700 text-neutral-100 transition delay-50 duration-300 ease-in focus:border-2 focus:border-indigo-400 focus:scale-101" />
 

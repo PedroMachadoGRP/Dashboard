@@ -2,6 +2,7 @@ import { api } from "./api"
 
 interface UpdateData {
     name:string 
+    lastName:string
     email:string 
     password:string
 }

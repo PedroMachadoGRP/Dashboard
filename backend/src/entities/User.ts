@@ -11,6 +11,9 @@ export class User {
     @Column({length:300})
     name:string
 
+    @Column({length:300})
+    lastName:string
+
     @Column({unique:true, length:300})
     email:string
 
