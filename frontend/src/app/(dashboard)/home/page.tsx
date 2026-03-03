@@ -7,6 +7,8 @@ import { useEffect, useState } from "react"
 import UserActivityCard from "@/components/profile/userActivityCard"
 import { UserService } from "@/services/user.service"
 import { Activity, ActivityService } from "@/services/activity.service"
+import { DialogModal, Weekday } from "@/components/ui/dialogModal"
+
 
 interface User {
   id: number
@@ -14,11 +16,12 @@ interface User {
   email: string
 }
 
+
+
 export default function Page() {
   const [user, setUser] = useState<User | null>(null)
   const [activities, setActivities] = useState<Activity[]>([])
-  const [title, setTitle] = useState<string>("")
-  const [description, setDescription] = useState<string>("")
+  const [loadingActivities, setLoadingActivities] = useState(false)
   const { userId, } = useAuth()
 
 
@@ -34,21 +37,20 @@ export default function Page() {
     }
   }
 
-  const handleCreate = async () => {
+  async function handleCreateActivity(data: {
+    title: string
+    days: Weekday[]
+  }) {
     try {
       await ActivityService.createActivity({
-        title: "Academia",
+        title: data.title,
         user: { id: Number(userId) },
-        activityDay: [
-          { day: "Segunda" },
-          { day: "Terça" },
-          { day: "Quarta" },
-          { day: "Quinta" },
-          { day: "Sexta" },
-          { day: "Sabado" },
-          { day: "Domingo" }
-        ]
+        activityDay: data.days.map(day => ({ day }))
       })
+
+      // Atualiza lista após criar
+      await loadActivities()
+
     } catch (error: any) {
       console.log(error.response?.data)
     }
@@ -68,16 +70,19 @@ export default function Page() {
     loadUser()
   }, [])
 
-  useEffect(() => {
     async function loadActivities() {
-      try {
-        const data = await ActivityService.getActivities()
-        setActivities(data)
-
-      } catch {
-        setActivities([])
-      }
+    try {
+      setLoadingActivities(true)
+      const data = await ActivityService.getActivities()
+      setActivities(data)
+    } catch {
+      setActivities([])
+    } finally {
+      setLoadingActivities(false)
     }
+  }
+
+  useEffect(() => {
     loadActivities()
   }, [])
 
@@ -91,8 +96,12 @@ export default function Page() {
         <h2 className=" text-start text-4xl  antialiased text-neutral-500 dark:text-zinc-100 ">Hello, {user?.name}</h2>
       </header>
 
-      <section className="flex flex-col">
-        <h1 className="text-start text-3xl antialiased text-neutral-500 dark:text-zinc-100">Suas atividades</h1>
+      <section className="flex flex-col gap-2">
+        <div className="flex flex-row gap-5">
+          <h1 className="text-start text-3xl antialiased text-neutral-500 dark:text-zinc-100">Suas atividades</h1>
+          <DialogModal onCreate={handleCreateActivity} />
+        </div>
+
         <div className="flex justify-between flex-row">
           {activities?.map(activity => (
             <UserActivityCard
@@ -117,7 +126,6 @@ export default function Page() {
         </button>
 
       </section> */}
-
 
 
     </div>
