@@ -9,31 +9,52 @@ import { UserService } from "@/services/user.service"
 import { Activity, ActivityService } from "@/services/activity.service"
 import ProfileField from "@/components/profile/profileField"
 import ProfilePasswordField from "@/components/profile/profilePasswordField"
+import { UpdatedUser, UpdateUserModal } from "@/components/profile/updateUserModal"
+import { useSnackbar } from "notistack"
 
 interface User {
   id: number
   name: string
   lastName: string
   email: string
-  password: string
 }
+
+
 
 export default function Page() {
   const [user, setUser] = useState<User | null>(null)
-  const [activities, setActivities] = useState<Activity[]>([])
-  const [title, setTitle] = useState<string>("")
-  const [description, setDescription] = useState<string>("")
+  const { enqueueSnackbar } = useSnackbar()
   const { userId, } = useAuth()
 
 
-  const handleUpdate = async (id: number) => {
+  const handleUpdate = async (data: UpdatedUser) => {
     try {
-      const updateUser = await UserService.update(id, { name: "Abacate" })
+      const updateUser = await UserService.update(Number(userId), data)
       setUser(updateUser)
 
 
-    } catch (error) {
+      enqueueSnackbar("Usuário Atualizado com sucesso!", {
+        variant: "success",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
+
+    } catch (error:any) {
       console.error(error);
+
+      const message =
+        error?.response?.data?.message ||
+        "Erro ao Atualizar usuário";
+
+      enqueueSnackbar(message, {
+        variant: "error",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
 
     }
   }
@@ -58,7 +79,7 @@ export default function Page() {
 
 
     <div className="flex items-center justify-center min-h-screen">
-      <div className="flex flex-col bg-neutral-50 dark:bg-[#141414] text-neutral-700 dark:text-neutral-100 rop-shadow-black drop-shadow-xl/15 dark:drop-shadow-white dark:drop-shadow-xl/2 rounded-lg w-250 h-130 p-5">
+      <div className="flex flex-col bg-neutral-50 dark:bg-[#141414] text-neutral-700 dark:text-neutral-100 drop-shadow-black drop-shadow-xl/15 dark:drop-shadow-white dark:drop-shadow-xl/2 rounded-lg w-250 h-130 p-5">
 
         <header className="h-20">
           <h2 className="text-2xl">Seu perfil</h2>
@@ -74,6 +95,9 @@ export default function Page() {
             <ProfileField title="Sobrenome" info={user?.lastName} />
             <ProfileField title="Email" info={user?.email} />
             <ProfilePasswordField title="Senha" info={"••••••••"} />
+
+            <UpdateUserModal onCreate={handleUpdate} />
+
           </section>
         </main>
 

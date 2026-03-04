@@ -4,6 +4,7 @@ import * as React from "react"
 import { Dialog } from "radix-ui"
 import { Cross2Icon } from "@radix-ui/react-icons"
 import WeekdaySelector from "./weekDaySelector"
+import { useState } from "react"
 
 
 export type Weekday =
@@ -20,16 +21,15 @@ type DialogModalProps = {
 }
 
 export function DialogModal({ onCreate }: DialogModalProps) {
-  const [title, setTitle] = React.useState("")
-  const [selectedDays, setSelectedDays] = React.useState<Weekday[]>([])
-  const [open, setOpen] = React.useState(false)
+  const [title, setTitle] = useState("")
+  const [selectedDays, setSelectedDays] = useState<Weekday[]>([])
+  const [open, setOpen] = useState(false)
 
   async function handleSubmit() {
     if (!title || selectedDays.length === 0) return
 
     await onCreate({ title, days: selectedDays })
 
-    // resetar
     setTitle("")
     setSelectedDays([])
     setOpen(false)
@@ -38,7 +38,7 @@ export function DialogModal({ onCreate }: DialogModalProps) {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
-        <button className="h-[35px] rounded bg-violet-500 px-4 text-white">
+        <button className="h-[35px] rounded border border-green-400 hover:bg-green-300 dark:border-violet-700 dark:border hover:dark:bg-violet-700 transition duration-300 px-4 text-neutral-700 dark:text-neutral-100 hover:cursor-pointer">
           Nova atividade
         </button>
       </Dialog.Trigger>
@@ -46,16 +46,16 @@ export function DialogModal({ onCreate }: DialogModalProps) {
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/30 backdrop-blur-[2px]" />
 
-        <Dialog.Content className="fixed left-1/2 top-1/2 w-[90vw] max-w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-md bg-white p-6 shadow-lg">
+        <Dialog.Content className="fixed left-1/2 top-1/2 w-[90vw] max-w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-md bg-neutral-50 dark:bg-[#141414] text-neutral-700 dark:text-neutral-100 p-6 shadow-lg">
 
-          <Dialog.Title className="text-lg font-semibold mb-4">
+          <Dialog.Title className="text-lg font-semibold mb-4 ">
             Criar nova atividade
           </Dialog.Title>
 
           <div className="flex flex-col gap-4">
 
             <div>
-              <label className="text-sm">Nome da atividade</label>
+              <label className="text-lg">Nome da atividade</label>
               <input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -63,8 +63,8 @@ export function DialogModal({ onCreate }: DialogModalProps) {
               />
             </div>
 
-            <div>
-              <label className="text-sm">Dias da semana</label>
+            <div className="flex flex-col gap-2">
+              <label className="text-lg">Dias da semana</label>
               <WeekdaySelector
                 selectedDays={selectedDays}
                 onChange={setSelectedDays}
@@ -73,7 +73,7 @@ export function DialogModal({ onCreate }: DialogModalProps) {
 
             <button
               onClick={handleSubmit}
-              className="mt-4 bg-green-500 text-white py-2 rounded"
+              className="mt-4 bg-green-500 dark:bg-blue-900 text-white py-2 rounded hover:cursor-pointer hover:bg-blue-400 dark:hover:bg-purple-950 transition-all duration-200   "
             >
               Criar
             </button>

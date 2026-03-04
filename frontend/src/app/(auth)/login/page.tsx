@@ -1,9 +1,6 @@
 "use client"
 
 import { useAuth } from "@/app/context/useAuth"
-import { loginUser } from "@/services/auth.service"
-import axios from "axios"
-import { useRouter } from "next/navigation"
 import { useSnackbar } from "notistack"
 import { useState } from "react"
 

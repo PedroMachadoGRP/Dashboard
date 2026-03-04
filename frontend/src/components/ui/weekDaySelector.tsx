@@ -40,7 +40,7 @@ export default function WeekdaySelector({
   }
 
   return (
-    <div className="flex gap-2 flex-wrap">
+    <div className="flex gap-1 flex-wrap">
       {weekDays.map(day => {
         const isSelected = selectedDays.includes(day.value)
 
@@ -55,10 +55,10 @@ export default function WeekdaySelector({
 
             <span
               className={`
-                px-4 py-2 rounded-lg border text-sm transition-all duration-200 active:scale-95
+                px-3  py-2 rounded-lg border text-sm transition-all duration-200 active:scale-95
                 ${isSelected
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "bg-white text-black border-gray-300 hover:bg-gray-100"}
+                  ? "bg-blue-600 text-white border-blue-600 dark:bg-blue-950 dark:border-black"
+                  : "bg-white text-black border-gray-300 hover:bg-gray-100 "}
               `}
             >
               {day.label}

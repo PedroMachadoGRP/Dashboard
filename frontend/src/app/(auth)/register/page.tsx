@@ -1,9 +1,7 @@
 "use client"
 import { useState } from "react"
-import axios from "axios"
 import { useSnackbar } from "notistack"
 import { registerUser } from "@/services/auth.service"
-import { ZodError } from "zod"
 import { registerSchema } from "@/schemas/register.schema"
 
 export default function Page() {
