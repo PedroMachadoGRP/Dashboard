@@ -25,8 +25,8 @@ export const ActivityService = {
         return response.data
     },
 
-    async getActivities(){
-        const response = await api.get("/activities")
+    async getActivities(limit?:number){
+        const response = await api.get(`/activities`, {params:{limit}})
         return response.data
     },
 

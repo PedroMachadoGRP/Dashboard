@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { ActivityController } from "../controllers/activity.controller";
 import { authMiddleware } from "../middlewares/authMiddleware";
+import { validateSchema } from "../middlewares/createUserMiddleware";
 
 
 

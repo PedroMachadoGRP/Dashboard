@@ -12,15 +12,13 @@ export class Activity {
     title: string
 
     @OneToMany(() => ActivityDay, day => day.activity, {
-        cascade: true,
+        cascade: true
     })
     activityDay: ActivityDay[]
 
     @ManyToOne(() => User, (user) => user.activity, {
-        cascade: true,
         onDelete: "CASCADE"
     })
     @JoinColumn({ name: "user_id" })
     user: User
-
 }

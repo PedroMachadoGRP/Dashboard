@@ -38,7 +38,7 @@ export function DialogModal({ onCreate }: DialogModalProps) {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
-        <button className="h-[35px] rounded border border-green-400 hover:bg-green-300 dark:border-violet-700 dark:border hover:dark:bg-violet-700 transition duration-300 px-4 text-neutral-700 dark:text-neutral-100 hover:cursor-pointer">
+        <button className="h-[35px] rounded border border-green-400 hover:bg-green-300 dark:border-violet-700 dark:border  hover:dark:bg-violet-700 transition duration-300 px-4 text-neutral-700 dark:text-neutral-100 hover:cursor-pointer">
           Nova atividade
         </button>
       </Dialog.Trigger>
@@ -59,6 +59,7 @@ export function DialogModal({ onCreate }: DialogModalProps) {
               <input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                maxLength={50}
                 className="w-full border rounded px-3 py-2 mt-1"
               />
             </div>

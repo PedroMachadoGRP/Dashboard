@@ -101,11 +101,6 @@ export default function Page() {
           </section>
         </main>
 
-
-        {/* <section>
-          <button className="text-red-900 border ">Editar</button>
-        </section> */}
-
       </div>
     </div>
 

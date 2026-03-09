@@ -12,7 +12,7 @@ interface RegisterData {
     password:string
 }
 
-export interface User {
+interface User {
   id: string
   name: string
   lastName:string

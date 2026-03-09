@@ -11,13 +11,11 @@ import { DialogModal, Weekday } from "@/components/ui/dialogModal"
 import { useSnackbar } from "notistack"
 
 
-interface User {
+export interface User {
   id: number
   name: string
   email: string
 }
-
-
 
 export default function Page() {
   const [user, setUser] = useState<User | null>(null)
@@ -27,6 +25,12 @@ export default function Page() {
   const { userId, } = useAuth()
 
   async function handleCreateActivity(data: { title: string, days: Weekday[] }) {
+
+    if (!userId) {
+      enqueueSnackbar("Usuário não identificado", { variant: "error" })
+      return
+    }
+
     try {
       await ActivityService.createActivity({
         title: data.title,
@@ -49,6 +53,7 @@ export default function Page() {
         error?.response?.data?.message ||
         "Erro ao criar atividade";
 
+
       enqueueSnackbar(message, {
         variant: "error",
         anchorOrigin: {
@@ -57,6 +62,9 @@ export default function Page() {
         },
       });
     }
+
+    console.log(data);
+
   }
 
   useEffect(() => {
@@ -76,10 +84,12 @@ export default function Page() {
   async function loadActivities() {
     try {
       setLoadingActivities(true)
-      const data = await ActivityService.getActivities()
+      const data = await ActivityService.getActivities(3)
       setActivities(data)
+
     } catch {
       setActivities([])
+
     } finally {
       setLoadingActivities(false)
     }
@@ -101,7 +111,7 @@ export default function Page() {
 
       <section className="flex flex-col gap-2">
         <div className="flex flex-row gap-5">
-          <h1 className="text-start text-3xl antialiased text-neutral-500 dark:text-zinc-100">Suas atividades</h1>
+          <h1 className="text-start text-3xl antialiased text-neutral-500 dark:text-zinc-100">Suas atividades recentes</h1>
           <DialogModal onCreate={handleCreateActivity} />
         </div>
 

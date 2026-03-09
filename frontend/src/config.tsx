@@ -33,9 +33,9 @@ export const NavItems = () => {
     },
     {
       name: 'Activties',
-      href: '/activties',
+      href: '/activities',
       icon: <BookMarked size={20} />,
-      active: isNavItemActive(pathname, '/activties'),
+      active: isNavItemActive(pathname, '/activities'),
       position: 'top',
     },
     
