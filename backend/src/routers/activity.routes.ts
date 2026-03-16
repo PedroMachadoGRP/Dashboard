@@ -10,6 +10,7 @@ const controller = new ActivityController()
 
 router.post('/create',authMiddleware,controller.create.bind(controller))
 router.get('/',authMiddleware,controller.list.bind(controller))
+router.get('/next',authMiddleware,controller.listNext.bind(controller))
 router.patch('/update/:id',authMiddleware,controller.update.bind(controller))
 router.delete('/delete/:id',authMiddleware,controller.remove.bind(controller))
 

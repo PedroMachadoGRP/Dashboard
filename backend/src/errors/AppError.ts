@@ -7,7 +7,6 @@ export class AppError extends Error {
 
     this.statusCode = statusCode;
 
-    // 🔥 Corrige prototype (importante no TS)
     Object.setPrototypeOf(this, AppError.prototype);
   }
 }

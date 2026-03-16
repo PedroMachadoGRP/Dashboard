@@ -21,7 +21,21 @@ export class ActivityController {
             const limit = req.query.limit ? Number(req.query.limit) : undefined
 
             const activitys = await services.findAll(limit)
-            
+
+            res.json(activitys)
+        } catch (e: any) {
+            res.status(400).json({ message: e.message })
+        }
+    }
+
+    async listNext(req: Request, res: Response) {
+        try {
+
+            const limit = Number(req.query.limit) || 5
+            const offset = Number(req.query.offset) || 0
+
+            const activitys = await services.findNext(limit, offset)
+
             res.json(activitys)
         } catch (e: any) {
             res.status(400).json({ message: e.message })
@@ -40,6 +54,7 @@ export class ActivityController {
     async remove(req: Request, res: Response) {
         try {
             const activity = await services.delete(Number(req.params.id))
+
             return res.json({ message: "Atividade deletada com sucesso" })
         } catch (e: any) {
             res.status(400).json({ message: e.message })

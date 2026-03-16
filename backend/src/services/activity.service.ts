@@ -59,6 +59,37 @@ export class ActivityService {
         }
     }
 
+   async findNext(limit?: number, offset?: number) {
+    try {
+
+        const [activities, total] = await this.activityRepo.findAndCount({
+            relations: ["user", "activityDay"],
+            order: { id: "DESC" },
+            take: limit,
+            skip: offset,
+        })
+
+        const cleanedActivities = activities.map((u) => {
+            const clone: any = { ...u }
+
+            if (clone.user) {
+                delete clone.user.password
+            }
+
+            return clone
+        })
+
+        return {
+            activities: cleanedActivities,
+            total
+        }
+
+    } catch (e) {
+        console.error("Erro:", e)
+        throw e
+    }
+}
+
     async update(id: number, data: Partial<Activity>) {
         try {
             const activity = await this.activityRepo.findOne({ where: { id } });

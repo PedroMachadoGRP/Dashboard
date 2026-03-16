@@ -46,7 +46,16 @@ export class UserController {
 
     async remove(req: Request, res: Response) {
         try {
-            const user = await service.remove(Number(req.params.id))
+            
+            await service.remove(Number(req.params.id))
+
+            
+            res.clearCookie("token", {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "strict"
+            })
+
             return res.json({ message: "user successfully deleted" })
         } catch (e: any) {
             res.status(404).json({ message: e.message })
