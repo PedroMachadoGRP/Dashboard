@@ -3,12 +3,14 @@ import { useState } from "react"
 import { useSnackbar } from "notistack"
 import { registerUser } from "@/services/auth.service"
 import { registerSchema } from "@/schemas/register.schema"
+import { useRouter } from "next/navigation"
 
 export default function Page() {
     const [name, setName] = useState("")
     const [lastName,setLastName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const router = useRouter()
 
     const { enqueueSnackbar } = useSnackbar()
 
@@ -36,9 +38,9 @@ export default function Page() {
 
                 return;
             }
-
+            
             await registerUser(result.data);
-
+            router.push("/home")
             enqueueSnackbar("Usuário cadastrado com sucesso!", {
                 variant: "success",
                 anchorOrigin: {

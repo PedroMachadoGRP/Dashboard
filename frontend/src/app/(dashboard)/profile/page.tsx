@@ -11,6 +11,7 @@ import ProfileField from "@/components/profile/profileField"
 import ProfilePasswordField from "@/components/profile/profilePasswordField"
 import { UpdatedUser, UpdateUserModal } from "@/components/profile/updateUserModal"
 import { useSnackbar } from "notistack"
+import { useRouter } from "next/navigation"
 
 interface User {
   id: number
@@ -24,6 +25,7 @@ interface User {
 export default function Page() {
   const [user, setUser] = useState<User | null>(null)
   const { enqueueSnackbar } = useSnackbar()
+  const router = useRouter()
   const { userId, } = useAuth()
 
 
@@ -31,7 +33,6 @@ export default function Page() {
     try {
       const updateUser = await UserService.update(Number(userId), data)
       setUser(updateUser)
-
 
       enqueueSnackbar("Usuário Atualizado com sucesso!", {
         variant: "success",
@@ -41,7 +42,7 @@ export default function Page() {
         },
       });
 
-    } catch (error:any) {
+    } catch (error: any) {
       console.error(error);
 
       const message =
@@ -59,6 +60,38 @@ export default function Page() {
     }
   }
 
+  const handleDelete = async () => {
+
+    try {
+
+      enqueueSnackbar("Usuário Atualizado com sucesso!", {
+        variant: "success",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
+
+      const deleteUser = await UserService.delete(Number(userId))
+      router.refresh()
+      return deleteUser
+    } catch (error: any) {
+      console.error(error);
+
+      const message =
+        error?.response?.data?.message ||
+        "Erro ao deletar usuário";
+
+      enqueueSnackbar(message, {
+        variant: "error",
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "right",
+        },
+      });
+
+    }
+  }
 
   useEffect(() => {
 
@@ -96,7 +129,12 @@ export default function Page() {
             <ProfileField title="Email" info={user?.email} />
             <ProfilePasswordField title="Senha" info={"••••••••"} />
 
-            <UpdateUserModal onCreate={handleUpdate} />
+
+            <div className="flex justify-between">
+              <UpdateUserModal onCreate={handleUpdate} />
+              <button onClick={() => handleDelete()} className="w-50 h-10 rounded transition duration-300 hover:cursor-pointer border border-red-950 hover:bg-red-950">Deletar</button>
+            </div>
+
 
           </section>
         </main>

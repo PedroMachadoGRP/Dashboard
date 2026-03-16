@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/set-state-in-effect */
+
 
 import { api } from "@/services/api"
 import { loginUser, logoutUser, me } from "@/services/auth.service"

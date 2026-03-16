@@ -3,39 +3,43 @@ import { api } from "./api"
 
 export interface ActivityDay {
     id?: number
-    day:string
+    day: string
 }
 
 export interface Activity {
     id?: number
-    title:string
-    activityDay:ActivityDay[]
+    title: string
+    activityDay: ActivityDay[]
 }
 
 interface ActivityRegister {
-    title:string,
-    user:{id:number}
-    activityDay:ActivityDay[]
+    title: string,
+    user: { id: number }
+    activityDay: ActivityDay[]
 }
 
 export const ActivityService = {
-    
-    async createActivity(data:ActivityRegister){
-        const response = await api.post("/activities/create/",data)
+
+    async createActivity(data: ActivityRegister) {
+        const response = await api.post("/activities/create/", data)
         return response.data
     },
 
-    async getActivities(limit?:number){
-        const response = await api.get(`/activities`, {params:{limit}})
+    async getActivities(limit?: number) {
+        const response = await api.get(`/activities`, { params: { limit } })
+        return response.data
+    },
+    async getNextActivities(limit?: number, offset?: number) {
+        const response = await api.get(`/activities/next`, {params:{limit, offset}})
         return response.data
     },
 
-    async updateActivity(userId:number,data:Partial<Activity>){
-        const response = await api.patch(`/activities/${userId}`,data)
+    async updateActivity(userId: number, data: Partial<Activity>) {
+        const response = await api.patch(`/activities/${userId}`, data)
         return response.data
     },
 
-    async deleteActivity(userId:number){
+    async deleteActivity(userId: number) {
         await api.delete(`/activities/${userId}`)
     },
 }
