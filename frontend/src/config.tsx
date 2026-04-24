@@ -24,27 +24,13 @@ export const NavItems = () => {
       active: isNavItemActive(pathname, '/profile'),
       position: 'top',
     },
-    {
-      name: 'Group',
-      href: '/groups',
-      icon: <Layers size={20} />,
-      active: isNavItemActive(pathname, '/groups'),
-      position: 'top',
-    },
+
     {
       name: 'Activties',
       href: '/activities',
       icon: <BookMarked size={20} />,
       active: isNavItemActive(pathname, '/activities'),
       position: 'top',
-    },
-    
-    {
-      name: 'Settings',
-      href: '/settings',
-      icon: <Settings size={20} />,
-      active: isNavItemActive(pathname, '/settings'),
-      position: 'bottom',
     },
 
   ];

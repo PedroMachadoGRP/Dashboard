@@ -21,6 +21,14 @@
   }
 }
 
+.input-style {
+  @apply w-full p-2 rounded-md bg-gray-700 text-neutral-100 border border-indigo-700 outline-none shadow-xl/20 shadow-violet-900 transition;
+}
+
+.input-style:focus {
+  @apply border-2 border-indigo-400 scale-[1.01];
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

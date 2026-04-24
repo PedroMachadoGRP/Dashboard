@@ -1,4 +1,4 @@
-import { Activity} from '@/services/activity.service'
+import { Activity } from '@/services/activity.service'
 
 const weekDays = [
     { label: "Seg", value: "SEGUNDA" },
@@ -10,55 +10,90 @@ const weekDays = [
     { label: "Dom", value: "DOMINGO" },
 ]
 
-export default function ActivityList(props:{name:string, activities:Activity[]}) {
-
+export default function ActivityList(props: { name: string, activities: Activity[] }) {
 
     return (
         <main>
-            <section className='flex flex-col gap-4'>
+            <section className="flex flex-col divide-y divide-neutral-200 dark:divide-[#3d3d3d]">
+
                 {props.activities?.map(activity => (
-                    <section key={activity.id}  className="flex justify-between items-start  border-t dark:border-[#3d3d3d] border-neutral-200  bg-neutral-50 dark:bg-[#141414] p-1  hover:cursor-pointer hover:opacity-90">
+                    <button
+                        key={activity.id}
+                        onClick={() => console.log(activity.id)}
+                        className="
+                        w-full text-left
+                        p-3 md:p-4
+                        bg-neutral-50 dark:bg-[#141414]
+                        hover:opacity-90 transition">
 
-                        <div className="flex flex-col items-center">
-                            <h2 className="font-semibold">Usuário</h2>
-                            <h3>{props.name}</h3>
-                        </div>
+                        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
 
-                        <div className="flex flex-col items-center">
-                            <h2 className="font-semibold">Título</h2>
-                            <h3>{activity.title}</h3>
-                        </div>
+                            <div className="flex flex-col sm:flex-row sm:gap-6">
 
-                        <div className="flex flex-col items-center">
-                            <h2 className="font-semibold">Dias da semana</h2>
+                                <div>
+                                    <h2 className="text-xs md:text-sm text-neutral-400">
+                                        Usuário
+                                    </h2>
+                                    <h3 className="font-medium text-sm md:text-base">
+                                        {props.name}
+                                    </h3>
+                                </div>
 
-                            <div className="grid grid-cols-4 gap-2 mt-2">
-                                {weekDays.map(day => {
+                                <div>
+                                    <h2 className="text-xs md:text-sm text-neutral-400">
+                                        Título
+                                    </h2>
+                                    <h3 className="font-medium text-sm md:text-base wrap-break-word">
+                                        {activity.title}
+                                    </h3>
+                                </div>
 
-                                    const isActive = activity.activityDay?.some(
-                                        d => d.day?.toUpperCase() === day.value 
-                                    )
+                            </div>
 
-                                    return (
-                                        <span
-                                            key={day.value}
-                                            className={`px-3 py-1 rounded-lg text-sm text-center
-                                            ${isActive
-                                                    ? "bg-blue-800 dark:bg-violet-800 text-neutral-200 trasition duration-300 "
-                                                    : "bg-gray-200 opacity-40 text-black"}
-                                            `}
-                                        >
-                                            {day.label}
-                                        </span>
-                                    )
-                                })}
+                            <div className="flex flex-col gap-1">
+
+                                <h2 className="text-xs md:text-sm text-neutral-400">
+                                    Dias da semana
+                                </h2>
+
+                                <div
+                                    className="
+                                    grid gap-2
+                                    grid-cols-4
+                                    sm:grid-cols-7">
+                                    {weekDays.map(day => {
+                                        const isActive = activity.activityDay?.some(
+                                            d => d.day?.toUpperCase() === day.value
+                                        )
+
+                                        return (
+                                            <span
+                                                key={day.value}
+                                                className={`
+                                                    text-xs md:text-sm
+                                                    px-2 py-1 rounded-md text-center
+                                                    transition
+                                                ${isActive
+                                                        ? "bg-blue-800 dark:bg-violet-800 text-white"
+                                                        : "bg-gray-300 opacity-40 text-black dark:text-black"}
+                                                        `}
+                                            >
+                                                {day.label}
+                                            </span>
+                                        )
+                                    })}
+                                </div>
+
                             </div>
 
                         </div>
-                    </section>
+
+                    </button>
                 ))}
+
             </section>
-            <hr className='dark:text-[#3d3d3d] text-neutral-200'/>
+
+            <hr className="mt-2 border-neutral-200 dark:border-[#3d3d3d]" />
         </main>
     )
 }

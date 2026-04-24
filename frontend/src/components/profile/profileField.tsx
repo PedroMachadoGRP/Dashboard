@@ -8,9 +8,26 @@ interface ProfileFieldProps {
 
 export default function ProfileField({title, info}:ProfileFieldProps) {
   return (
-    <div className='flex flex-col bg-transparent text-xl rounded-lg   '>
-        <label className='text-lg text-muted-foreground'>{title}</label>
-        <Input className='text-neutral-700 dark:text-neutral-100' value={info ?? ""} placeholder={info} disabled></Input>
+<div className="flex flex-col w-full gap-1">
+
+      {/* Label */}
+      <label className="text-sm md:text-base text-muted-foreground">
+        {title}
+      </label>
+
+      {/* Campo */}
+      <Input
+        value={info ?? ""}
+        placeholder="—"
+        disabled
+        className="
+          w-full
+          text-sm md:text-base
+          text-neutral-700 dark:text-neutral-100
+          truncate
+        "
+      />
+
     </div>
   )
 }

@@ -38,56 +38,116 @@ export function DialogModal({ onCreate }: DialogModalProps) {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
-        <button className="h-[35px] rounded border border-green-400 hover:bg-green-300 dark:border-violet-700 dark:border  hover:dark:bg-violet-700 transition duration-300 px-4 text-neutral-700 dark:text-neutral-100 hover:cursor-pointer">
+        <button className="h-[40px] rounded-md border border-green-400 dark:border-violet-700 px-4 text-sm md:text-base text-neutral-700 dark:text-neutral-100 hover:bg-green-300 hover:cursor-pointer dark:hover:bg-violet-700 transition">
           Nova atividade
         </button>
       </Dialog.Trigger>
 
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 bg-black/30 backdrop-blur-[2px]" />
+  {/* Overlay */}
+  <Dialog.Overlay className="fixed inset-0 bg-black/40 backdrop-blur-sm" />
 
-        <Dialog.Content className="fixed left-1/2 top-1/2 w-[90vw] max-w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-md bg-neutral-50 dark:bg-[#141414] text-neutral-700 dark:text-neutral-100 p-6 shadow-lg">
+  {/* Modal */}
+  <Dialog.Content
+    className="
+      fixed z-50
 
-          <Dialog.Title className="text-lg font-semibold mb-4 ">
-            Criar nova atividade
-          </Dialog.Title>
+      /* MOBILE (bottom sheet) */
+      bottom-0 left-0 right-0
+      w-full
+      max-h-[85vh]
+      rounded-t-2xl
+      p-4
 
-          <div className="flex flex-col gap-4">
+      /* DESKTOP (centralizado) */
+      md:top-1/2 md:left-1/2
+      md:bottom-auto md:right-auto
+      md:w-[90vw] md:max-w-lg
+      md:max-h-[90vh]
+      md:-translate-x-1/2 md:-translate-y-1/2
+      md:rounded-xl md:p-6
 
-            <div>
-              <label className="text-lg">Nome da atividade</label>
-              <input
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                maxLength={50}
-                className="w-full border rounded px-3 py-2 mt-1"
-              />
-            </div>
+      overflow-y-auto
 
-            <div className="flex flex-col gap-2">
-              <label className="text-lg">Dias da semana</label>
-              <WeekdaySelector
-                selectedDays={selectedDays}
-                onChange={setSelectedDays}
-              />
-            </div>
+      bg-neutral-50 dark:bg-[#141414]
+      text-neutral-700 dark:text-neutral-100
+      shadow-xl
+    "
+  >
 
-            <button
-              onClick={handleSubmit}
-              className="mt-4 bg-green-500 dark:bg-blue-900 text-white py-2 rounded hover:cursor-pointer hover:bg-blue-400 dark:hover:bg-purple-950 transition-all duration-200   "
-            >
-              Criar
-            </button>
-          </div>
+    {/* Barra de arrastar (UX mobile) */}
+    <div className="mx-auto mb-3 h-1.5 w-12 rounded-full bg-gray-300 md:hidden" />
 
-          <Dialog.Close asChild>
-            <button className="absolute right-3 top-3">
-              <Cross2Icon />
-            </button>
-          </Dialog.Close>
+    {/* Título */}
+    <Dialog.Title className="text-base md:text-lg font-semibold mb-4">
+      Criar nova atividade
+    </Dialog.Title>
 
-        </Dialog.Content>
-      </Dialog.Portal>
+    <div className="flex flex-col gap-4">
+
+      {/* Nome */}
+      <div>
+        <label className="text-sm md:text-base">
+          Nome da atividade
+        </label>
+        <input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          maxLength={50}
+          className="
+            w-full mt-1
+            border rounded-md
+            px-3 py-2
+            text-sm md:text-base
+            outline-none
+            focus:border-blue-500
+          "
+        />
+      </div>
+
+      {/* Dias */}
+      <div className="flex flex-col gap-2">
+        <label className="text-sm md:text-base">
+          Dias da semana
+        </label>
+        <WeekdaySelector
+          selectedDays={selectedDays}
+          onChange={setSelectedDays}
+        />
+      </div>
+
+      {/* Botão */}
+      <button
+        onClick={handleSubmit}
+        className="
+          mt-2 w-full
+          bg-green-500 dark:bg-blue-900
+          text-white py-2 rounded-md
+          text-sm md:text-base
+          hover:bg-blue-400 dark:hover:bg-purple-950
+          transition
+        "
+      >
+        Criar
+      </button>
+    </div>
+
+    {/* Fechar */}
+    <Dialog.Close asChild>
+      <button
+        className="
+          absolute right-3 top-3
+          p-2 rounded-md
+          hover:bg-black/10 dark:hover:bg-white/10
+          transition
+        "
+      >
+        <Cross2Icon />
+      </button>
+    </Dialog.Close>
+
+  </Dialog.Content>
+</Dialog.Portal>
     </Dialog.Root>
   )
 }

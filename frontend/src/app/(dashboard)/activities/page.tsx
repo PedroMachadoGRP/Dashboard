@@ -33,8 +33,6 @@ export default function Page() {
     useEffect(() => {
         async function loadActivities() {
             try {
-
-
                 const offset = (page - 1) * activityLimit
                 const data = await ActivityService.getNextActivities(activityLimit, offset)
                 setActivities(data.activities)
@@ -53,40 +51,86 @@ export default function Page() {
 
 
     return (
-        <div className="flex items-center justify-center min-h-screen ">
-            <div className="flex flex-col bg-neutral-50 dark:bg-[#141414] text-neutral-700 dark:text-neutral-100 drop-shadow-black drop-shadow-xl/15 dark:drop-shadow-white dark:drop-shadow-xl/2 rounded-lg w-250 h-175 p-2">
-                <header>
-                    <section className='flex items-center justify-between w-full'>
-                        <h1 className="text-start text-3xl antialiased text-neutral-500 dark:text-zinc-100">Suas atividades recentes</h1>
+        <div className="flex justify-center items-start min-h-screen p-4 md:p-8">
 
-                        <div className="flex  items-center h-7  gap-3">
-                            <button
-                                disabled={page === 1}
-                                onClick={() => setPage((p) => Math.max(p - 1, 1))}
-                                className="px-3 py-1 bg-transparent hover:border-neutral-400 hover:border transition duration-200 rounded"
-                            >
-                                <span>&#60;</span>
-                            </button>
+            <div className="
+            w-full max-w-4xl
+            flex flex-col
+            gap-4
+            p-4 md:p-6
+            rounded-xl
+            bg-neutral-50 dark:bg-[#141414]
+            text-neutral-700 dark:text-neutral-100
+            shadow-lg
+        ">
+                <header className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 
-                            <button
-                                disabled={page >= totalPages}
-                                onClick={() => setPage((p) => p + 1)}
-                                className="px-3 py-1 bg-transparent hover:border-neutral-400 hover:border transition duration-200 rounded"
-                            >
-                                <span>&#62;</span>
-                            </button>
-                        </div>
-                    </section>
+                    <h1 className="text-xl md:text-2xl lg:text-3xl text-neutral-600 dark:text-zinc-100">
+                        Suas atividades recentes
+                    </h1>
+
+
+                    <div className="flex items-center gap-2 self-end sm:self-auto">
+
+                        <button
+                            disabled={page === 1}
+                            onClick={() => setPage((p) => Math.max(p - 1, 1))}
+                            className="
+                                px-3 py-1.5
+                                rounded-md
+                                border
+                                border-transparent
+                                hover:border-neutral-400
+                                disabled:opacity-40
+                                transition">
+
+                            &#60;
+
+                        </button>
+
+                        <span className="text-sm md:text-base">
+                            {page} / {totalPages || 1}
+                        </span>
+
+                        <button
+                            disabled={page >= totalPages}
+                            onClick={() => setPage((p) => p + 1)}
+                            className="
+                            px-3 py-1.5
+                            rounded-md
+                            border
+                            border-transparent
+                            hover:border-neutral-400
+                            disabled:opacity-40
+                            transition">
+                            &#62;
+                        </button>
+
+                    </div>
                 </header>
-                <main className=" flex flex-col p-5">
-                    <section className='flex self-end '>
-                        <h2>Página {page}</h2>
-                    </section>
-                    <ActivityList name={user?.name ?? ""} activities={activities ?? []} />
+
+                <main className="flex flex-col gap-3">
+
+                    <div className="text-right text-sm text-neutral-400">
+                        Página {page}
+                    </div>
+
+                    <div className="max-h-[70vh] overflow-y-auto pr-1">
+                        <ActivityList
+                            name={user?.name ?? ""}
+                            activities={activities ?? []}
+                        />
+                    </div>
+
+                    {activities?.length === 0 && (
+                        <p className="text-center text-neutral-400 mt-4">
+                            Nenhuma atividade encontrada.
+                        </p>
+                    )}
+
                 </main>
 
             </div>
-
         </div>
     )
 }

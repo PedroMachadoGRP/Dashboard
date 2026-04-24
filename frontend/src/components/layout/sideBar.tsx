@@ -11,28 +11,55 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip"
 import Link from "next/link"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight, Menu } from "lucide-react"
 import { ThemeToggle } from "../ui/ThemeToggle"
 
 export default function SideBar() {
   const [isExpanded, setIsExpand] = useState(true)
+    const [isMobileOpen, setIsMobileOpen] = useState(false)
   const navItem = NavItems()
 
   return (
-    <div className="relative flex">
+       <>
+      {/* BOTÃO MOBILE */}
+      <button
+        onClick={() => setIsMobileOpen(true)}
+        className="
+          md:hidden fixed top-4 left-85 z-50
+          p-2 rounded-md
+          bg-white dark:bg-neutral-800
+          shadow-md
+        "
+      >
+        <Menu size={20} />
+      </button>
+
+      {/* OVERLAY MOBILE */}
+      {isMobileOpen && (
+        <div
+          onClick={() => setIsMobileOpen(false)}
+          className="fixed inset-0 bg-black/40 z-40 md:hidden"
+        />
+      )}
+
+      {/* SIDEBAR */}
       <div
         className={cn(
-          isExpanded ? "w-50" : "w-[68px]",
           `
-          relative h-screen
-          transition-all duration-300 ease-in-out
-          border-r
+          fixed md:relative z-50
+          h-screen
+          transition-all duration-300
           bg-white dark:bg-neutral-900
-          border-neutral-200 dark:border-neutral-800
-          `
+          border-r border-neutral-200 dark:border-neutral-800
+          `,
+          isExpanded ? "w-56" : "w-[70px]",
+
+          // MOBILE comportamento
+          isMobileOpen ? "left-0" : "-left-full md:left-0"
         )}
       >
-        <aside className="flex h-full flex-col w-full px-4">
+        <aside className="flex h-full flex-col w-full px-3">
+
           {/* TOP */}
           <div className="mt-4 pb-2">
             <div className="flex flex-col space-y-1">
@@ -72,24 +99,21 @@ export default function SideBar() {
           </div>
         </aside>
 
-        {/* TOGGLE SIDEBAR */}
+        {/* TOGGLE DESKTOP */}
         <button
-          type="button"
           onClick={() => setIsExpand(!isExpanded)}
           className="
+            hidden md:flex
             absolute top-1/2 -right-3 -translate-y-1/2
-            flex h-6 w-6 items-center justify-center rounded-full
-            border shadow-md transition
+            h-6 w-6 items-center justify-center
+            rounded-full border shadow-md
             bg-white dark:bg-neutral-800
-            text-neutral-700 dark:text-neutral-200
-            border-neutral-300 dark:border-neutral-700
-            hover:shadow-lg 
           "
         >
           {isExpanded ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
         </button>
       </div>
-    </div>
+    </>
   )
 }
 

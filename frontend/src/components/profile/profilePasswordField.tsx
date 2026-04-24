@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Input } from '../ui/input'
+import { Eye, EyeOff } from 'lucide-react'
 
 interface ProfilePasswordFieldProps {
   title: string
@@ -8,10 +9,30 @@ interface ProfilePasswordFieldProps {
 }
 
 export default function ProfilePasswordField({ title, info }: ProfilePasswordFieldProps) {
+  
   return (
-    <div className='flex flex-col bg-transparent text-xl rounded-lg   '>
-        <label className='text-lg text-muted-foreground'>{title}</label>
-        <Input className='text-neutral-700 dark:text-neutral-100' value={info ?? ""} placeholder={info} disabled></Input>
+    <div className="flex flex-col w-full gap-1">
+
+
+      {/* Label */}
+      <label className="text-sm md:text-base text-muted-foreground">
+        {title}
+      </label>
+
+      {/* Campo */}
+      <div className="relative">
+        <Input
+          value={info ?? "********"}
+          disabled
+          className="
+            w-full
+            pr-10
+            text-sm md:text-base
+            text-neutral-700 dark:text-neutral-100
+          "
+        />
+      </div>
+
     </div>
   )
 }

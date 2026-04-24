@@ -109,36 +109,78 @@ export default function Page() {
 
 
   return (
+ <div className="flex justify-center items-start min-h-screen p-4 md:p-8">
 
+      <div
+        className="
+          w-full max-w-3xl
+          flex flex-col gap-6
+          p-4 md:p-6
+          rounded-xl
+          bg-neutral-50 dark:bg-[#141414]
+          text-neutral-700 dark:text-neutral-100
+          shadow-lg
+        ">
 
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="flex flex-col bg-neutral-50 dark:bg-[#141414] text-neutral-700 dark:text-neutral-100 drop-shadow-black drop-shadow-xl/15 dark:drop-shadow-white dark:drop-shadow-xl/2 rounded-lg w-250 h-130 p-5">
-
-        <header className="h-20">
-          <h2 className="text-2xl">Seu perfil</h2>
+        <header>
+          <h2 className="text-xl md:text-2xl font-semibold">
+            Seu perfil
+          </h2>
         </header>
 
-        <main className="flex flex-col gap-1">
+        <main className="flex flex-col gap-4">
 
-          <h2 className="text-2xl">Suas informações</h2>
-          <hr className='text-gray-100 dark:text-gray-700' />
+          <div>
+            <h3 className="text-lg md:text-xl font-medium">
+              Suas informações
+            </h3>
+            <hr className="mt-1 border-gray-200 dark:border-gray-700" />
+          </div>
 
-          <section className="grid grid-cols-2 gap-4 w-full">
+          <section
+            className="
+              grid gap-4
+              grid-cols-1
+              sm:grid-cols-2
+            ">
+
             <ProfileField title="Nome" info={user?.name} />
             <ProfileField title="Sobrenome" info={user?.lastName} />
             <ProfileField title="Email" info={user?.email} />
-            <ProfilePasswordField title="Senha" info={"••••••••"} />
-
-
-            <div className="flex justify-between">
-              <UpdateUserModal onCreate={handleUpdate} />
-              <button onClick={() => handleDelete()} className="w-50 h-10 rounded transition duration-300 hover:cursor-pointer border border-red-950 hover:bg-red-950">Deletar</button>
-            </div>
-
+            <ProfilePasswordField title="Senha" />
 
           </section>
-        </main>
 
+          <div
+            className="
+              flex flex-col sm:flex-row
+              gap-3
+              md:justify-start
+              sm:justify-between
+            "
+          >
+            <UpdateUserModal onCreate={handleUpdate} />
+
+            <button
+              onClick={handleDelete}
+              className="
+                w-full sm:w-auto
+                h-10 px-4
+                rounded-md
+                border border-red-400
+                text-red-500
+                hover:bg-red-400 hover:text-white
+                dark:border-red-900 dark:hover:bg-red-900
+                hover:cursor-pointer
+                duration-350
+                transition
+              "
+            >
+              Deletar conta
+            </button>
+          </div>
+
+        </main>
       </div>
     </div>
 

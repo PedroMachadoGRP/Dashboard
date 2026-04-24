@@ -1,6 +1,5 @@
 
 'use client'
-
 import { useAuth } from "@/app/context/useAuth"
 import { me } from "@/services/auth.service"
 import { useEffect, useState } from "react"
@@ -9,6 +8,7 @@ import { UserService } from "@/services/user.service"
 import { Activity, ActivityService } from "@/services/activity.service"
 import { DialogModal, Weekday } from "@/components/ui/dialogModal"
 import { useSnackbar } from "notistack"
+import Card from "@/components/ui/testCard"
 
 
 export interface User {
@@ -103,19 +103,45 @@ export default function Page() {
 
 
   return (
+    <div className="flex flex-col w-full min-h-screen p-4 md:p-6 gap-8">
 
-    <div className="flex flex-1 flex-col  h-full w-full p-5 gap-10">
-      <header className="flex p-2 h-25 bg-white rounded-2xl drop-shadow-black drop-shadow-xl/10 dark:drop-shadow-white dark:bg-blue-800">
-        <h2 className=" text-start text-4xl  antialiased text-neutral-500 dark:text-zinc-100 ">Seja bem vindo, {user?.name}</h2>
+      {/* HEADER */}
+      <header
+        className="
+          w-full
+          rounded-2xl
+          p-4 md:p-6
+          bg-gradient-to-r from-neutral-50 to-zinc-100
+          dark:from-blue-800 dark:to-indigo-900
+          shadow-md
+        "
+      >
+        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-neutral-600 dark:text-zinc-100">
+          Seja bem-vindo, {user?.name}
+        </h2>
       </header>
 
-      <section className="flex flex-col gap-2">
-        <div className="flex flex-row gap-5">
-          <h1 className="text-start text-3xl antialiased text-neutral-500 dark:text-zinc-100">Suas atividades recentes</h1>
+      {/* SECTION */}
+      <section className="flex flex-col gap-4">
+
+        {/* Título + botão */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between md:justify-start gap-3">
+          <h1 className="text-xl md:text-2xl lg:text-3xl text-neutral-600 dark:text-zinc-100">
+            Suas atividades recentes
+          </h1>
+
           <DialogModal onCreate={handleCreateActivity} />
         </div>
 
-        <div className="flex justify-between flex-row">
+        {/* LISTA */}
+        <div
+          className="
+            grid gap-4
+            grid-cols-1
+            sm:grid-cols-2
+            lg:grid-cols-3
+          "
+        >
           {activities?.map(activity => (
             <UserActivityCard
               key={activity.id}
@@ -124,6 +150,14 @@ export default function Page() {
             />
           ))}
         </div>
+
+        {/* Estado vazio */}
+        {activities.length === 0 && !loadingActivities && (
+          <p className="text-center text-neutral-400 mt-4">
+            Nenhuma atividade encontrada.
+          </p>
+        )}
+
       </section>
 
     </div>

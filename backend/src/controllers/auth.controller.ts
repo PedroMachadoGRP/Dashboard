@@ -11,7 +11,21 @@ export class AuthController {
         try {
 
             const user = await service.create(req.body)
-            res.status(201).json(user)
+
+            const token = generateToken({ id: user.id, email: user.email })
+
+            res.cookie("token", token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "strict",
+                maxAge: 60 * 60 * 1000
+            })
+
+            const {password, ...safeUser} = user
+
+            res.status(201).json(safeUser)
+
+
 
         } catch (error: any) {
 
@@ -64,27 +78,27 @@ export class AuthController {
             message: "Logout realizado com sucesso"
         })
     }
-    async me(req:Request, res:Response){
+    async me(req: Request, res: Response) {
         try {
             const userData = (req as any).user
 
-            if(!userData?.id){
-                return res.status(401).json({message:"Auth Error"})
+            if (!userData?.id) {
+                return res.status(401).json({ message: "Auth Error" })
             }
 
             const user = await service.findById(userData.id)
 
-            if(!user){
-                return res.status(404).json({message:"Usuário não encontrado"})
+            if (!user) {
+                return res.status(404).json({ message: "Usuário não encontrado" })
             }
 
-            const safeUser:any = {...user}
+            const safeUser: any = { ...user }
             delete safeUser.password
 
             return res.status(200).json(safeUser)
 
-        }catch(error:any){
-            return res.status(500).json({message:"Internal error"})
+        } catch (error: any) {
+            return res.status(500).json({ message: "Internal error" })
         }
     }
 
