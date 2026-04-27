@@ -43,7 +43,7 @@ export default function ActivityList(props: { name: string, activities: Activity
                                     <h2 className="text-xs md:text-sm text-neutral-400">
                                         Título
                                     </h2>
-                                    <h3 className="font-medium text-sm md:text-base wrap-break-word">
+                                    <h3 className="font-medium text-sm md:text-base wrap-anywhere">
                                         {activity.title}
                                     </h3>
                                 </div>
@@ -59,7 +59,7 @@ export default function ActivityList(props: { name: string, activities: Activity
                                 <div
                                     className="
                                     grid gap-2
-                                    grid-cols-4
+                                    grid-cols-5
                                     sm:grid-cols-7">
                                     {weekDays.map(day => {
                                         const isActive = activity.activityDay?.some(

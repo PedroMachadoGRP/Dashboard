@@ -105,13 +105,12 @@ export default function Page() {
   return (
     <div className="flex flex-col w-full min-h-screen p-4 md:p-6 gap-8">
 
-      {/* HEADER */}
       <header
         className="
           w-full
           rounded-2xl
           p-4 md:p-6
-          bg-gradient-to-r from-neutral-50 to-zinc-100
+          bg-linear-to-r from-neutral-50 to-zinc-100
           dark:from-blue-800 dark:to-indigo-900
           shadow-md
         "
@@ -121,10 +120,8 @@ export default function Page() {
         </h2>
       </header>
 
-      {/* SECTION */}
       <section className="flex flex-col gap-4">
 
-        {/* Título + botão */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between md:justify-start gap-3">
           <h1 className="text-xl md:text-2xl lg:text-3xl text-neutral-600 dark:text-zinc-100">
             Suas atividades recentes
@@ -133,7 +130,6 @@ export default function Page() {
           <DialogModal onCreate={handleCreateActivity} />
         </div>
 
-        {/* LISTA */}
         <div
           className="
             grid gap-4
@@ -151,7 +147,6 @@ export default function Page() {
           ))}
         </div>
 
-        {/* Estado vazio */}
         {activities.length === 0 && !loadingActivities && (
           <p className="text-center text-neutral-400 mt-4">
             Nenhuma atividade encontrada.
